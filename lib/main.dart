@@ -1,18 +1,6 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: Scaffold(
-      appBar: AppBar(
-        title: Text('Transferências'),
-      ),
-      body: ListaTransferencias(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-      ),
-    ),
-  ));
-}
+void main() => runApp(BytebankApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -128,19 +116,41 @@ class _MyHomePageState extends State<MyHomePage> {
 
 //StatelessWidget => Não consegue modificar o conteúdo do Widget.
 //StatefulWidget  => Consegue modificar o conteúdo do Widget.
-class ListaTransferencias extends StatelessWidget {
+
+//Widget Root
+class BytebankApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        ItemTransferencia('100', '5799-1'),
-        ItemTransferencia('200', '2000'),
-        ItemTransferencia('300', '65412')
-      ],
+    return MaterialApp(
+      home: Scaffold(
+        body: FormularioTransferencia(),
+      ),
     );
   }
 }
 
+//View ListaTransferencias
+class ListaTransferencias extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Transferencias'),
+        ),
+        body: Column(
+          children: <Widget>[
+            ItemTransferencia('100', '5799-1'),
+            ItemTransferencia('200', '2000'),
+            ItemTransferencia('300', '65412')
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+        ));
+  }
+}
+
+//Component ItemTransferencia
 class ItemTransferencia extends StatelessWidget {
   final String valor;
   final String numeroConta;
@@ -157,5 +167,44 @@ class ItemTransferencia extends StatelessWidget {
       ),
     );
   }
+}
 
+//View FormularioTransferencia
+class FormularioTransferencia extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Criando Transferência'),
+      ),
+      body: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: TextField(
+              style: TextStyle(fontSize: 16),
+              decoration: InputDecoration(
+                  labelText: 'Número da conta', hintText: '0000'),
+              keyboardType: TextInputType.number,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: TextField(
+              style: TextStyle(fontSize: 16),
+              decoration: InputDecoration(
+                labelText: 'Valor',
+                hintText: '0.00',
+                icon: Icon(Icons.monetization_on),
+              ),
+              keyboardType: TextInputType.number,
+            ),
+          ),
+          RaisedButton(
+            child: Text('Confirmar'),
+          )
+        ],
+      ),
+    );
+  }
 }
