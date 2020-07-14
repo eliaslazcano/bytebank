@@ -171,6 +171,9 @@ class ItemTransferencia extends StatelessWidget {
 
 //View FormularioTransferencia
 class FormularioTransferencia extends StatelessWidget {
+  final TextEditingController _controllerCampoNumeroConta = TextEditingController();
+  final TextEditingController _controllerCampoValor = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -182,6 +185,7 @@ class FormularioTransferencia extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(16),
             child: TextField(
+              controller: _controllerCampoNumeroConta,
               style: TextStyle(fontSize: 16),
               decoration: InputDecoration(
                   labelText: 'Número da conta', hintText: '0000'),
@@ -191,6 +195,7 @@ class FormularioTransferencia extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(16),
             child: TextField(
+              controller: _controllerCampoValor,
               style: TextStyle(fontSize: 16),
               decoration: InputDecoration(
                 labelText: 'Valor',
@@ -202,9 +207,32 @@ class FormularioTransferencia extends StatelessWidget {
           ),
           RaisedButton(
             child: Text('Confirmar'),
+            onPressed: () {
+              debugPrint('Número da conta: ' + _controllerCampoNumeroConta.text); //String
+              debugPrint('Valor: ' + _controllerCampoValor.text); //String
+              final int numeroConta = int.tryParse(_controllerCampoNumeroConta.text);
+              final double valor = double.tryParse(_controllerCampoValor.text); //Se o parse falha, retorna null
+              if (numeroConta != null && valor != null) {
+                final transferenciaCriada = Transferencia(numeroConta, valor);
+                debugPrint('$transferenciaCriada');
+              }
+            },
           )
         ],
       ),
     );
+  }
+}
+
+//Classe
+class Transferencia {
+  final int numeroConta;
+  final double valor;
+
+  Transferencia(this.numeroConta, this.valor);
+
+  @override
+  String toString() {
+    return 'Transferencia{numeroConta: $numeroConta, valor: $valor}';
   }
 }
