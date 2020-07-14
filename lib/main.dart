@@ -6,24 +6,7 @@ void main() {
       appBar: AppBar(
         title: Text('Transferências'),
       ),
-      body: Column(
-        children: <Widget>[
-          Card(
-            child: ListTile(
-              leading: Icon(Icons.monetization_on),
-              title: Text('100.00'),
-              subtitle: Text('10x10.00'),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              leading: Icon(Icons.monetization_on),
-              title: Text('300.00'),
-              subtitle: Text('20x15.00'),
-            ),
-          )
-        ],
-      ),
+      body: ListaTransferencias(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
       ),
@@ -141,4 +124,38 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+//StatelessWidget => Não consegue modificar o conteúdo do Widget.
+//StatefulWidget  => Consegue modificar o conteúdo do Widget.
+class ListaTransferencias extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        ItemTransferencia('100', '5799-1'),
+        ItemTransferencia('200', '2000'),
+        ItemTransferencia('300', '65412')
+      ],
+    );
+  }
+}
+
+class ItemTransferencia extends StatelessWidget {
+  final String valor;
+  final String numeroConta;
+
+  ItemTransferencia(this.valor, this.numeroConta);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: Icon(Icons.monetization_on),
+        title: Text(valor),
+        subtitle: Text(numeroConta),
+      ),
+    );
+  }
+
 }
