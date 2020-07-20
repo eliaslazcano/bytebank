@@ -174,6 +174,16 @@ class FormularioTransferencia extends StatelessWidget {
   final TextEditingController _controllerCampoNumeroConta = TextEditingController();
   final TextEditingController _controllerCampoValor = TextEditingController();
 
+  //Função. Algoritmo para criar uma transferência.
+  void _criaTransferencia() {
+    final int numeroConta = int.tryParse(_controllerCampoNumeroConta.text);
+    final double valor = double.tryParse(_controllerCampoValor.text); //Se o parse falha, retorna null
+    if (numeroConta != null && valor != null) {
+      final transferenciaCriada = Transferencia(numeroConta, valor);
+      debugPrint(transferenciaCriada.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -195,21 +205,7 @@ class FormularioTransferencia extends StatelessWidget {
           ),
           RaisedButton(
             child: Text('Confirmar'),
-            onPressed: () {
-              debugPrint('Número da conta: ' + _controllerCampoNumeroConta.text); //String
-              debugPrint('Valor: ' + _controllerCampoValor.text); //String
-              final int numeroConta = int.tryParse(_controllerCampoNumeroConta.text);
-              final double valor = double.tryParse(_controllerCampoValor.text); //Se o parse falha, retorna null
-              if (numeroConta != null && valor != null) {
-                final transferenciaCriada = Transferencia(numeroConta, valor);
-                debugPrint('$transferenciaCriada');
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('$transferenciaCriada'),
-                  )
-                );
-              }
-            },
+            onPressed: () => _criaTransferencia(),
           )
         ],
       ),
@@ -244,7 +240,7 @@ class Editor extends StatelessWidget {
   }
 }
 
-//Classe
+//Classe, modelo para objetos.
 class Transferencia {
   final int numeroConta;
   final double valor;
