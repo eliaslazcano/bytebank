@@ -131,25 +131,26 @@ class BytebankApp extends StatelessWidget {
 
 //View ListaTransferencias
 class ListaTransferencias extends StatelessWidget {
+  final List<Transferencia> _transferencias = List();
+
   @override
   Widget build(BuildContext context) {
+    //Para testes, valores pré existentes na lista:
+    _transferencias.add(Transferencia(100, 100.0));
+    _transferencias.add(Transferencia(100, 100.0));
+    _transferencias.add(Transferencia(100, 100.0));
+    _transferencias.add(Transferencia(100, 100.0));
+
     return Scaffold(
         appBar: AppBar(
           title: Text('Transferencias'),
         ),
-        body: ListView(
-          children: <Widget>[
-            ItemTransferencia('100', '5799-1'),
-            ItemTransferencia('200', '2000'),
-            ItemTransferencia('200', '2000'),
-            ItemTransferencia('200', '2000'),
-            ItemTransferencia('200', '2000'),
-            ItemTransferencia('200', '2000'),
-            ItemTransferencia('200', '2000'),
-            ItemTransferencia('200', '2000'),
-            ItemTransferencia('200', '2000'),
-            ItemTransferencia('300', '65412')
-          ],
+        body: ListView.builder(
+          itemCount: _transferencias.length,
+          itemBuilder: (BuildContext context, int index) {
+            final Transferencia transferencia = _transferencias[index];
+            return ItemTransferencia(transferencia);
+          },
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
@@ -157,7 +158,7 @@ class ListaTransferencias extends StatelessWidget {
             Future<Transferencia> future = Navigator.push(context, MaterialPageRoute(builder: (context) => FormularioTransferencia())); //Navega para a View FormularioTransferencia
             future.then((transferenciaRecebida) {
               //Callback invocado quando o usuário recuar da tela FormularioTransferencia para ListaTransferencias
-              debugPrint(transferenciaRecebida.toString());
+              _transferencias.add(transferenciaRecebida);
             });
           },
         ));
@@ -166,18 +167,17 @@ class ListaTransferencias extends StatelessWidget {
 
 //Component ItemTransferencia
 class ItemTransferencia extends StatelessWidget {
-  final String valor;
-  final String numeroConta;
+  final Transferencia transferencia;
 
-  ItemTransferencia(this.valor, this.numeroConta);
+  ItemTransferencia(this.transferencia);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
         leading: Icon(Icons.monetization_on),
-        title: Text(valor),
-        subtitle: Text(numeroConta),
+        title: Text(transferencia.valor.toString()),
+        subtitle: Text(transferencia.numeroConta.toString()),
       ),
     );
   }
