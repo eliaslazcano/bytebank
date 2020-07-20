@@ -147,7 +147,11 @@ class ListaTransferencias extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => FormularioTransferencia())); //Navega para a View FormularioTransferencia
+            Future<Transferencia> future = Navigator.push(context, MaterialPageRoute(builder: (context) => FormularioTransferencia())); //Navega para a View FormularioTransferencia
+            future.then((transferenciaRecebida) {
+              //Callback invocado quando o usuário recuar da tela FormularioTransferencia para ListaTransferencias
+              debugPrint(transferenciaRecebida.toString());
+            });
           },
         ));
   }
@@ -178,12 +182,12 @@ class FormularioTransferencia extends StatelessWidget {
   final TextEditingController _controllerCampoValor = TextEditingController();
 
   //Função. Algoritmo para criar uma transferência.
-  void _criaTransferencia() {
+  void _criaTransferencia(BuildContext context) {
     final int numeroConta = int.tryParse(_controllerCampoNumeroConta.text);
     final double valor = double.tryParse(_controllerCampoValor.text); //Se o parse falha, retorna null
     if (numeroConta != null && valor != null) {
       final transferenciaCriada = Transferencia(numeroConta, valor);
-      debugPrint(transferenciaCriada.toString());
+      Navigator.pop(context, transferenciaCriada); //Recua para a tela anterior (View pai). O 2º param será enviado para ele.
     }
   }
 
@@ -208,7 +212,7 @@ class FormularioTransferencia extends StatelessWidget {
           ),
           RaisedButton(
             child: Text('Confirmar'),
-            onPressed: () => _criaTransferencia(),
+            onPressed: () => _criaTransferencia(context),
           )
         ],
       ),
