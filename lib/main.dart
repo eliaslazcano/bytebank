@@ -130,25 +130,26 @@ class BytebankApp extends StatelessWidget {
 }
 
 //View ListaTransferencias
-class ListaTransferencias extends StatelessWidget {
+class ListaTransferencias extends StatefulWidget {
   final List<Transferencia> _transferencias = List();
 
   @override
+  _ListaTransferenciasState createState() => _ListaTransferenciasState();
+}
+
+class _ListaTransferenciasState extends State<ListaTransferencias> {
+
+  @override
   Widget build(BuildContext context) {
-    //Para testes, valores pré existentes na lista:
-    _transferencias.add(Transferencia(100, 100.0));
-    _transferencias.add(Transferencia(100, 100.0));
-    _transferencias.add(Transferencia(100, 100.0));
-    _transferencias.add(Transferencia(100, 100.0));
 
     return Scaffold(
         appBar: AppBar(
           title: Text('Transferencias'),
         ),
         body: ListView.builder(
-          itemCount: _transferencias.length,
+          itemCount: widget._transferencias.length,
           itemBuilder: (BuildContext context, int index) {
-            final Transferencia transferencia = _transferencias[index];
+            final Transferencia transferencia = widget._transferencias[index];
             return ItemTransferencia(transferencia);
           },
         ),
@@ -158,7 +159,9 @@ class ListaTransferencias extends StatelessWidget {
             Future<Transferencia> future = Navigator.push(context, MaterialPageRoute(builder: (context) => FormularioTransferencia())); //Navega para a View FormularioTransferencia
             future.then((transferenciaRecebida) {
               //Callback invocado quando o usuário recuar da tela FormularioTransferencia para ListaTransferencias
-              _transferencias.add(transferenciaRecebida);
+              setState(() { //setState() notifica o Framework que o Widget vai receber atualização visual, a função passada é invocada antes da renderização.
+                widget._transferencias.add(transferenciaRecebida);
+              });
             });
           },
         ));
