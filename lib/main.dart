@@ -182,28 +182,16 @@ class FormularioTransferencia extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: TextField(
-              controller: _controllerCampoNumeroConta,
-              style: TextStyle(fontSize: 16),
-              decoration: InputDecoration(
-                  labelText: 'Número da conta', hintText: '0000'),
-              keyboardType: TextInputType.number,
-            ),
+          Editor(
+            controlador: _controllerCampoNumeroConta,
+            rotulo: 'Numero da conta',
+            dica: '0000',
           ),
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: TextField(
-              controller: _controllerCampoValor,
-              style: TextStyle(fontSize: 16),
-              decoration: InputDecoration(
-                labelText: 'Valor',
-                hintText: '0.00',
-                icon: Icon(Icons.monetization_on),
-              ),
-              keyboardType: TextInputType.number,
-            ),
+          Editor(
+            controlador: _controllerCampoValor,
+            rotulo: 'Valor',
+            dica: '0.00',
+            icone: Icons.monetization_on,
           ),
           RaisedButton(
             child: Text('Confirmar'),
@@ -224,6 +212,33 @@ class FormularioTransferencia extends StatelessWidget {
             },
           )
         ],
+      ),
+    );
+  }
+}
+
+//Component Editor (Input TextField)
+class Editor extends StatelessWidget {
+  TextEditingController controlador;
+  String rotulo;
+  String dica;
+  IconData icone;
+
+  Editor({this.controlador, this.rotulo, this.dica, this.icone}); //Os parametros envolvidos por {} são opcionais
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: TextField(
+        controller: controlador,
+        style: TextStyle(fontSize: 16),
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          labelText: rotulo,
+          hintText: dica,
+          icon: icone != null ? Icon(icone) : null,
+        ),
       ),
     );
   }
