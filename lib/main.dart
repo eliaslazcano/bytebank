@@ -160,7 +160,7 @@ class _ListaTransferenciasState extends State<ListaTransferencias> {
             future.then((transferenciaRecebida) {
               //Callback invocado quando o usuário recuar da tela FormularioTransferencia para ListaTransferencias
               setState(() { //setState() notifica o Framework que o Widget vai receber atualização visual, a função passada é invocada antes da renderização.
-                widget._transferencias.add(transferenciaRecebida);
+                if(transferenciaRecebida != null) widget._transferencias.add(transferenciaRecebida);
               });
             });
           },
@@ -207,24 +207,26 @@ class FormularioTransferencia extends StatelessWidget {
       appBar: AppBar(
         title: Text('Criando Transferência'),
       ),
-      body: Column(
-        children: <Widget>[
-          Editor(
-            controlador: _controllerCampoNumeroConta,
-            rotulo: 'Numero da conta',
-            dica: '0000',
-          ),
-          Editor(
-            controlador: _controllerCampoValor,
-            rotulo: 'Valor',
-            dica: '0.00',
-            icone: Icons.monetization_on,
-          ),
-          RaisedButton(
-            child: Text('Confirmar'),
-            onPressed: () => _criaTransferencia(context),
-          )
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Editor(
+              controlador: _controllerCampoNumeroConta,
+              rotulo: 'Numero da conta',
+              dica: '0000',
+            ),
+            Editor(
+              controlador: _controllerCampoValor,
+              rotulo: 'Valor',
+              dica: '0.00',
+              icone: Icons.monetization_on,
+            ),
+            RaisedButton(
+              child: Text('Confirmar'),
+              onPressed: () => _criaTransferencia(context),
+            )
+          ],
+        ),
       ),
     );
   }
