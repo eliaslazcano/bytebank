@@ -5,8 +5,9 @@ class Editor extends StatelessWidget {
   final String rotulo;
   final String dica;
   final IconData icone;
+  final TextInputType keyboard;
 
-  Editor({this.controlador, this.rotulo, this.dica, this.icone}); //Os parametros envolvidos por {} são opcionais
+  Editor({this.controlador, this.rotulo, this.dica, this.icone, this.keyboard}); //Os parametros envolvidos por {} são opcionais
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class Editor extends StatelessWidget {
       child: TextField(
         controller: controlador,
         style: TextStyle(fontSize: 16),
-        keyboardType: TextInputType.number,
+        keyboardType: keyboard != null ? keyboard : TextInputType.phone,
         decoration: InputDecoration(
           labelText: rotulo,
           hintText: dica,
