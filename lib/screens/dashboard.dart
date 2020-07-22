@@ -1,3 +1,4 @@
+import 'package:bytebank/screens/lista_contatos.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
@@ -14,28 +15,33 @@ class Dashboard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start, //Alinhamento horizontal
           children: <Widget>[
             Image.asset("images/bytebank_logo.png"),
-            Container(
-              color: Theme.of(context).primaryColor, //Cor de fundo, usando a cor primaria do tema. Aceita cores da classe Colors.cor tambem.
-              height: 100,
-              width: 120,
-              padding: EdgeInsets.all(8),
-              child: Column( // Filhos
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Icon(
-                    Icons.people,
-                    color: Colors.white,
-                    size: 48,
-                  ),
-                  Text(
-                    "Contatos",
-                    style: TextStyle(
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ListaContatos()));
+              },
+              child: Container(
+                color: Theme.of(context).primaryColor, //Cor de fundo, usando a cor primaria do tema. Aceita cores da classe Colors.cor tambem.
+                height: 100,
+                width: 120,
+                padding: EdgeInsets.all(8),
+                child: Column( // Filhos
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Icon(
+                      Icons.people,
                       color: Colors.white,
-                      fontSize: 16
+                      size: 48,
                     ),
-                  )
-                ],
+                    Text(
+                      "Contatos",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16
+                      ),
+                    )
+                  ],
+                ),
               ),
             )
           ],
