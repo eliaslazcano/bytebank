@@ -9,7 +9,7 @@ class Dashboard extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          Text("Olá mundo")
+          Image.asset("images/bytebank_logo.png")
         ],
       ),
     );
