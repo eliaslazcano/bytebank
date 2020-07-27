@@ -1,4 +1,5 @@
 import 'package:bytebank/components/item_contato.dart';
+import 'package:bytebank/database/app_database.dart';
 import 'package:bytebank/models/Contato.dart';
 import 'package:bytebank/screens/formulario_contato.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +18,20 @@ class _ListaContatosState extends State<ListaContatos> {
       appBar: AppBar(
         title: Text("Contatos"),
       ),
-      body: ListView.builder(
-        itemCount: widget._contatos.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ItemContato(widget._contatos[index]);
+      body: FutureBuilder(
+        future: listarContatos(), //O Future que retornará os dados assincronos.
+        builder: (context, snapshot) {
+          if (!snapshot.hasData)
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          final List<Contato> contatos = snapshot.data;
+          return ListView.builder(
+            itemCount: contatos.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ItemContato(contatos[index]);
+            },
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
