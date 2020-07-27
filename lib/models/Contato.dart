@@ -1,8 +1,9 @@
 class Contato {
   final String nome;
   final int conta;
+  int id;
 
-  Contato(this.nome, this.conta);
+  Contato(this.nome, this.conta, {this.id});
 
   @override
   String toString() {

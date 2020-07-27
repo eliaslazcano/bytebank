@@ -1,3 +1,4 @@
+import 'package:bytebank/components/item_contato.dart';
 import 'package:bytebank/models/Contato.dart';
 import 'package:bytebank/screens/formulario_contato.dart';
 import 'package:flutter/material.dart';
@@ -19,18 +20,7 @@ class _ListaContatosState extends State<ListaContatos> {
       body: ListView.builder(
         itemCount: widget._contatos.length,
         itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: ListTile(
-              title: Text(
-                widget._contatos[index].nome,
-                style: TextStyle(fontSize: 24),
-              ),
-              subtitle: Text(
-                widget._contatos[index].conta.toString(),
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          );
+          return ItemContato(widget._contatos[index]);
         },
       ),
       floatingActionButton: FloatingActionButton(
