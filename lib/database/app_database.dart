@@ -13,6 +13,7 @@ Future<Database> criarBanco() async {
       //Ao criar o banco, criamos as tabelas
       await db.execute("CREATE TABLE contatos (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT NOT NULL, conta INTEGER NOT NULL)");
     },
+    onDowngrade: onDatabaseDowngradeDelete //Apaga o banco se a versão é menor que a anterior.
   );
   return banco;
   //  await banco.close(); //Fecha a conexão

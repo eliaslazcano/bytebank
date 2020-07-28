@@ -35,13 +35,13 @@ class _ListaContatosState extends State<ListaContatos> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Future future = Navigator.push(context,
-              MaterialPageRoute(builder: (context) => FormularioContato()));
-          future.then((contato) {
-            setState(() {
-              if (contato != null) widget._contatos.add(contato);
-            });
+        onPressed: () async {
+          Contato contato = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => FormularioContato()),
+          );
+          setState(() {
+            if (contato != null) widget._contatos.add(contato); //TODO - Atualizar a lista
           });
         },
         child: Icon(Icons.add),
