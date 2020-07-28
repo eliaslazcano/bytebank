@@ -54,7 +54,7 @@ Future<List<Contato>> listarContatos() async {
     final Contato contato = Contato(map['nome'], map['conta'], id: map['id']);
     contatos.add(contato);
   }
-  await Future.delayed(Duration(seconds: 5)); //Tempo de atraso para simular bancos enormes.
+  await Future.delayed(Duration(seconds: 3)); //Tempo de atraso para simular bancos enormes.
   return contatos;
 }
 

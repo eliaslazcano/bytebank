@@ -21,17 +21,31 @@ class _ListaContatosState extends State<ListaContatos> {
       body: FutureBuilder(
         future: listarContatos(), //O Future que retornará os dados assincronos.
         builder: (context, snapshot) {
-          if (!snapshot.hasData)
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          final List<Contato> contatos = snapshot.data;
-          return ListView.builder(
-            itemCount: contatos.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ItemContato(contatos[index]);
-            },
-          );
+          switch(snapshot.connectionState) {
+            case ConnectionState.none:
+              // Não está em execução/não foi executado.
+              break;
+            case ConnectionState.active:
+              // Future em execução, mas já tem dado disponível (Futures do tipo Stream)
+              break;
+            case ConnectionState.waiting:
+              // Future em execução
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+              break;
+            case ConnectionState.done:
+              // Future concluído.
+              final List<Contato> contatos = snapshot.data;
+              return ListView.builder(
+                itemCount: contatos.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ItemContato(contatos[index]);
+                },
+              );
+              break;
+          }
+          return Text('Unknown error');
         },
       ),
       floatingActionButton: FloatingActionButton(
