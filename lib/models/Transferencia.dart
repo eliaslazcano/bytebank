@@ -1,11 +1,13 @@
+import 'package:bytebank/models/Contato.dart';
+
 class Transferencia {
-  final int numeroConta;
+  final Contato contato;
   final double valor;
 
-  Transferencia(this.numeroConta, this.valor);
+  Transferencia(this.contato, this.valor);
 
   @override
   String toString() {
-    return 'Transferencia: { numeroConta: $numeroConta, valor: $valor }';
+    return 'Transferencia: { numeroConta: $contato, valor: $valor }';
   }
 }

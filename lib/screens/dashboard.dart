@@ -21,10 +21,15 @@ class Dashboard extends StatelessWidget {
           Row(
             children: <Widget>[
               BotaoRecurso(
-                  "Contatos",
-                  Icons.people,
-                  () => ListaContatos()
+                "Contatos",
+                Icons.people,
+                () => ListaContatos()
               ),
+              BotaoRecurso(
+                "Transações",
+                Icons.monetization_on,
+                () => ListaTransferencias()
+              )
             ],
           )
         ],

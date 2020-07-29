@@ -1,6 +1,6 @@
 import 'package:bytebank/components/item_transferencia.dart';
 import 'package:bytebank/models/Transferencia.dart';
-import 'package:bytebank/screens/formulario_transferencia.dart';
+import 'package:bytebank/screens/lista_contatos.dart';
 import 'package:flutter/material.dart';
 
 class ListaTransferencias extends StatefulWidget {
@@ -29,7 +29,7 @@ class _ListaTransferenciasState extends State<ListaTransferencias> {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            Future<Transferencia> future = Navigator.push(context, MaterialPageRoute(builder: (context) => FormularioTransferencia())); //Navega para a View FormularioTransferencia
+            Future<Transferencia> future = Navigator.push(context, MaterialPageRoute(builder: (context) => ListaContatos())); //Navega para a View FormularioTransferencia
             future.then((transferenciaRecebida) {
               //Callback invocado quando o usuário recuar da tela FormularioTransferencia para ListaTransferencias
               setState(() { //setState() notifica o Framework que o Widget vai receber atualização visual, a função passada é invocada antes da renderização.

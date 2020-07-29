@@ -1,17 +1,20 @@
 import 'package:bytebank/components/editor.dart';
+import 'package:bytebank/models/Contato.dart';
 import 'package:bytebank/models/Transferencia.dart';
 import 'package:flutter/material.dart';
 
 class FormularioTransferencia extends StatelessWidget {
-  final TextEditingController _controllerCampoNumeroConta = TextEditingController();
+  final Contato _contato;
+
+  FormularioTransferencia(this._contato);
+
   final TextEditingController _controllerCampoValor = TextEditingController();
 
   //Função. Algoritmo para criar uma transferência.
   void _criaTransferencia(BuildContext context) {
-    final int numeroConta = int.tryParse(_controllerCampoNumeroConta.text);
     final double valor = double.tryParse(_controllerCampoValor.text); //Se o parse falha, retorna null
-    if (numeroConta != null && valor != null) {
-      final transferenciaCriada = Transferencia(numeroConta, valor);
+    if (valor != null) {
+      final transferenciaCriada = Transferencia(_contato, valor);
       Navigator.pop(context, transferenciaCriada); //Recua para a tela anterior (View pai). O 2º param será enviado para ele.
     }
   }
@@ -25,10 +28,16 @@ class FormularioTransferencia extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Editor(
-              controlador: _controllerCampoNumeroConta,
-              rotulo: 'Numero da conta',
-              dica: '0000',
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Text(
+                _contato.nome,
+                textDirection: TextDirection.ltr,
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 24,
+                ),
+              ),
             ),
             Editor(
               controlador: _controllerCampoValor,
