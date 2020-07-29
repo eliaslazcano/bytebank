@@ -1,4 +1,5 @@
 import 'package:bytebank/database/dao/contato_dao.dart';
+import 'package:bytebank/database/dao/transferencia_dao.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -12,6 +13,7 @@ Future<Database> abrirBanco() async {
     onCreate: (Database db, int version) async {
       //Ao criar o banco, criamos as tabelas
       await db.execute(ContatoDao.tableSql);
+      await db.execute(TransferenciaDao.tableSql);
     },
     onDowngrade: onDatabaseDowngradeDelete //Apaga o banco se a versão é menor que a anterior.
   );

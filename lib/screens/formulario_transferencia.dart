@@ -1,4 +1,5 @@
 import 'package:bytebank/components/editor.dart';
+import 'package:bytebank/database/dao/transferencia_dao.dart';
 import 'package:bytebank/models/Contato.dart';
 import 'package:bytebank/models/Transferencia.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +15,8 @@ class FormularioTransferencia extends StatelessWidget {
   void _criaTransferencia(BuildContext context) {
     final double valor = double.tryParse(_controllerCampoValor.text); //Se o parse falha, retorna null
     if (valor != null) {
-      final transferenciaCriada = Transferencia(_contato, valor);
-      Navigator.pop(context, transferenciaCriada); //Recua para a tela anterior (View pai). O 2º param será enviado para ele.
+      final transferencia = Transferencia(_contato, valor);
+      TransferenciaDao().salvar(transferencia).then((transferenciaSalva) => Navigator.pop(context, transferenciaSalva));
     }
   }
 
