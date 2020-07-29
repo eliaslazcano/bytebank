@@ -1,3 +1,4 @@
+import 'package:bytebank/database/dao/contato_dao.dart';
 import 'package:bytebank/models/Transferencia.dart';
 import 'package:bytebank/database/app_database.dart';
 import 'package:sqflite/sqflite.dart';
@@ -19,14 +20,18 @@ class TransferenciaDao {
   Map<String, dynamic> _toMap(Transferencia transferencia) {
     final Map<String, dynamic> map = Map();
     map[_valor] = transferencia.valor;
-    map[_contato] = transferencia.contato;
+    map[_contato] = transferencia.contato.id;
     if (transferencia.id != null) map[_id] = transferencia.id;
     return map;
   }
-  List<Transferencia> _toList(List<Map<String, dynamic>> maps) {
+  Future<List<Transferencia>> _toList(List<Map<String, dynamic>> maps) async {
     final List<Transferencia> transferencias = List();
     for(Map<String, dynamic> map in maps) {
-      final Transferencia transferencia = Transferencia(map[_contato], map[_valor], id: map[_id]);
+      final contato = await ContatoDao().obter(map[_contato]);
+      final Transferencia transferencia = Transferencia(
+          contato,
+          map[_valor],
+          id: map[_id]);
       transferencias.add(transferencia);
     }
     return transferencias;
@@ -55,7 +60,7 @@ class TransferenciaDao {
   Future<List<Transferencia>> listarTodos() async {
     final Database db = await abrirBanco();
     final maps = await db.query(_tableName);
-    List<Transferencia> transferencias = _toList(maps);
+    List<Transferencia> transferencias = await _toList(maps);
     return transferencias;
   }
   //Obtem uma transferencia do banco.
