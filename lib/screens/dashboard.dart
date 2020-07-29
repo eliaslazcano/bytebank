@@ -23,7 +23,7 @@ class Dashboard extends StatelessWidget {
               BotaoRecurso(
                   "Contatos",
                   Icons.people,
-                  ListaContatos()
+                  () => ListaContatos()
               ),
             ],
           )

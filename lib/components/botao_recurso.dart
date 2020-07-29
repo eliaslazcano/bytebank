@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class BotaoRecurso  extends StatelessWidget {
   final String _text;
   final IconData _icon;
-  final Widget _widget;
+  final Function _widget;
 
   BotaoRecurso(this._text, this._icon, this._widget);
 
@@ -15,7 +15,7 @@ class BotaoRecurso  extends StatelessWidget {
         color: Theme.of(context).primaryColor, //Cor de fundo,
         child: InkWell(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => _widget));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => _widget()));
           },
           child: Container(
             height: 100,
