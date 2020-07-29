@@ -1,5 +1,5 @@
 import 'package:bytebank/components/editor.dart';
-import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/database/dao/contato_dao.dart';
 import 'package:bytebank/models/Contato.dart';
 import 'package:flutter/material.dart';
 
@@ -13,8 +13,8 @@ class FormularioContato extends StatelessWidget {
     if (nome != null && conta != null) {
       final Contato contato = Contato(nome, conta);
       //Salva o contato no banco e recua para a tela anterior (View pai).
-      salvarContato(contato)
-          .then((contatoSalvo) => Navigator.pop(context, contato)); //2º param é enviado para view Pai.
+      final ContatoDao dao = ContatoDao();
+      dao.salvar(contato).then((contatoSalvo) => Navigator.pop(context, contato)); //2º param é enviado para view Pai.
     }
   }
 

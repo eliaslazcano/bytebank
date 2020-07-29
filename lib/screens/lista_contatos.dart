@@ -1,5 +1,5 @@
 import 'package:bytebank/components/item_contato.dart';
-import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/database/dao/contato_dao.dart';
 import 'package:bytebank/models/Contato.dart';
 import 'package:bytebank/screens/formulario_contato.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +12,8 @@ class ListaContatos extends StatefulWidget {
 }
 
 class _ListaContatosState extends State<ListaContatos> {
+  final ContatoDao dao = ContatoDao();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +21,7 @@ class _ListaContatosState extends State<ListaContatos> {
         title: Text("Contatos"),
       ),
       body: FutureBuilder(
-        future: listarContatos(), //O Future que retornará os dados assincronos.
+        future: dao.listarTodos(), //O Future que retornará os dados assincronos.
         builder: (context, snapshot) {
           switch(snapshot.connectionState) {
             case ConnectionState.none:
