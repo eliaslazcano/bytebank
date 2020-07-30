@@ -5,13 +5,15 @@ import 'package:flutter/material.dart';
 
 class FormularioContato extends StatelessWidget {
   final TextEditingController controllerNome = TextEditingController();
+  final TextEditingController controllerAgencia = TextEditingController();
   final TextEditingController controllerConta = TextEditingController();
 
   void criarContato(BuildContext context) {
     final String nome = controllerNome.text;
-    final int conta = int.tryParse(controllerConta.text);
-    if (nome != null && conta != null) {
-      final Contato contato = Contato(nome, conta);
+    final int agencia = int.tryParse(controllerAgencia.text.replaceAll(new RegExp(r'\D'), ""));
+    final int conta = int.tryParse(controllerConta.text.replaceAll(new RegExp(r'\D'), ""));
+    if (nome != null && conta != null && agencia != null) {
+      final Contato contato = Contato(nome, agencia, conta);
       //Salva o contato no banco e recua para a tela anterior (View pai).
       final ContatoDao dao = ContatoDao();
       dao.salvar(contato).then((contatoSalvo) => Navigator.pop(context, contato)); //2º param é enviado para view Pai.
@@ -31,6 +33,10 @@ class FormularioContato extends StatelessWidget {
               rotulo: "Nome completo",
               controlador: controllerNome,
               keyboard: TextInputType.text,
+            ),
+            Editor(
+              rotulo: "Numero da agencia",
+              controlador: controllerAgencia,
             ),
             Editor(
               rotulo: "Numero da conta",

@@ -60,7 +60,7 @@ class _ListaContatosState extends State<ListaContatos> {
             if (contato != null) widget._contatos.add(contato); //TODO - Atualizar a lista
           });
         },
-        child: Icon(Icons.add),
+        child: Icon(Icons.person_add),
       ),
     );
   }

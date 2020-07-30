@@ -1,4 +1,5 @@
 import 'package:bytebank/models/Contato.dart';
+import 'package:bytebank/models/Transferencia.dart';
 import 'package:bytebank/screens/formulario_transferencia.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +13,9 @@ class ItemContato extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => FormularioTransferencia(contato)));
+      onTap: () async {
+        Transferencia transferencia = await Navigator.push(context, MaterialPageRoute(builder: (context) => FormularioTransferencia(contato)));
+        if (transferencia != null) Navigator.pop(context);
       },
       child: Card(
         child: ListTile(
@@ -22,7 +24,7 @@ class ItemContato extends StatelessWidget {
             style: TextStyle(fontSize: 24),
           ),
           subtitle: Text(
-            contato.conta.toString(),
+            "A: ${contato.agencia} C: ${contato.conta}",
             style: TextStyle(fontSize: 16),
           ),
         ),

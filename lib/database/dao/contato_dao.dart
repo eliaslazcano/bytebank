@@ -8,17 +8,20 @@ class ContatoDao {
   //Nome das colunas
   static const String _id = 'id';
   static const String _nome = 'nome';
+  static const String _agencia = 'agencia';
   static const String _conta = 'conta';
   //Script de criação
   static const String tableSql = "CREATE TABLE $_tableName ("
-      "$_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-      "$_nome TEXT NOT NULL, "
+      "$_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+      "$_agencia INTEGER,"
+      "$_nome TEXT NOT NULL,"
       "$_conta INTEGER NOT NULL)";
 
   //Helpers
   Map<String, dynamic> _toMap(Contato contato) {
     final Map<String, dynamic> map = Map();
     map[_nome] = contato.nome;
+    map[_agencia] = contato.agencia;
     map[_conta] = contato.conta;
     if (contato.id != null) map[_id] = contato.id;
     return map;
@@ -26,7 +29,7 @@ class ContatoDao {
   List<Contato> _toList(List<Map<String, dynamic>> maps) {
     final List<Contato> contatos = List();
     for(Map<String, dynamic> map in maps) {
-      final Contato contato = Contato(map[_nome], map[_conta], id: map[_id]);
+      final Contato contato = Contato(map[_nome], map[_agencia], map[_conta], id: map[_id]);
       contatos.add(contato);
     }
     return contatos;
@@ -69,7 +72,7 @@ class ContatoDao {
     );
     if(maps.length > 0) {
       final map = maps.first;
-      return Contato(map[_nome], map[_conta], id: map[_id]);
+      return Contato(map[_nome], map[_agencia], map[_conta], id: map[_id]);
     }
     return null;
   }
