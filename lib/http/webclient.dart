@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:bytebank/http/interceptor.dart';
+import 'package:bytebank/models/Contato.dart';
+import 'package:bytebank/models/Transferencia.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:http/http.dart';
 
@@ -12,8 +15,18 @@ Future<void> requisicaoGet() async {
 }
 
 //Realiza uma requisição GET com interceptador.
-Future<void> requisicaoGetComInterceptor() async {
+Future<List<Transferencia>> requisicaoGetComInterceptor() async {
   final Client client = HttpClientWithInterceptor.build(interceptors: [LoggingInterceptor()]);
   final Response response = await client.get('$host/transactions');
-  print(response.body);
+
+  //Adapta o JSON para nossos objetos modelados.
+  final List<dynamic> decodedJson = jsonDecode(response.body);
+  final List<Transferencia> transferencias = List();
+  for (Map<String, dynamic> transferenciaJson in decodedJson) {
+    final Map<String, dynamic> contatoJson = transferenciaJson['contact'];
+    final Contato contato = Contato(contatoJson['name'], null, contatoJson['accountNumber']);
+    final Transferencia transferencia = Transferencia(contato, transferenciaJson['value']);
+    transferencias.add(transferencia);
+  }
+  return transferencias;
 }
