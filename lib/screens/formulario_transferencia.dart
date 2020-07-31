@@ -27,30 +27,48 @@ class FormularioTransferencia extends StatelessWidget {
         title: Text('Criando Transferência'),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Text(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
                 _contato.nome,
-                textDirection: TextDirection.ltr,
-                textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 24,
                 ),
               ),
-            ),
-            Editor(
-              controlador: _controllerCampoValor,
-              rotulo: 'Valor',
-              dica: '0.00',
-              icone: Icons.monetization_on,
-            ),
-            RaisedButton(
-              child: Text('Confirmar'),
-              onPressed: () => _criaTransferencia(context),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text(
+                  "C: ${_contato.conta} / A: ${_contato.agencia}",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Editor(
+                  controlador: _controllerCampoValor,
+                  rotulo: 'Valor',
+                  dica: '0.00',
+                  fontSize: 24,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: SizedBox(
+                  width: double.maxFinite,
+                  child: RaisedButton(
+                    child: Text('Confirmar'),
+                    onPressed: () => _criaTransferencia(context),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -41,7 +41,7 @@ class Webclient {
     final Response response = await client
         .post('$baseUrl/transactions',
             headers: {
-              //O uso de {chave: dado} será auto-convertido para um Map<String>
+              //O uso de {chave: dado} é entendido pelo Dart como um Map<String>
               'Content-type': 'application/json',
               'password': '1000',
             },

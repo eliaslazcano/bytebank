@@ -27,32 +27,35 @@ class FormularioContato extends StatelessWidget {
         title: Text("Novo contato"),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Editor(
-              rotulo: "Nome completo",
-              controlador: controllerNome,
-              keyboard: TextInputType.text,
-            ),
-            Editor(
-              rotulo: "Numero da agencia",
-              controlador: controllerAgencia,
-            ),
-            Editor(
-              rotulo: "Numero da conta",
-              controlador: controllerConta,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                width: double.maxFinite, //Aceita numeros double tambem
-                child: RaisedButton(
-                  child: Text('Criar'),
-                  onPressed: () => criarContato(context),
-                ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+              Editor(
+                rotulo: "Nome completo",
+                controlador: controllerNome,
+                keyboard: TextInputType.text,
               ),
-            )
-          ],
+              Editor(
+                rotulo: "Numero da agencia",
+                controlador: controllerAgencia,
+              ),
+              Editor(
+                rotulo: "Numero da conta",
+                controlador: controllerConta,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: SizedBox(
+                  width: double.maxFinite, //Aceita numeros double tambem
+                  child: RaisedButton(
+                    child: Text('Criar'),
+                    onPressed: () => criarContato(context),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

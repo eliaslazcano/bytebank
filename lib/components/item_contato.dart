@@ -12,21 +12,19 @@ class ItemContato extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        Transferencia transferencia = await Navigator.push(context, MaterialPageRoute(builder: (context) => FormularioTransferencia(contato)));
-        if (transferencia != null) Navigator.pop(context);
-      },
-      child: Card(
-        child: ListTile(
-          title: Text(
-            contato.nome,
-            style: TextStyle(fontSize: 24),
-          ),
-          subtitle: Text(
-            "A: ${contato.agencia} C: ${contato.conta}",
-            style: TextStyle(fontSize: 16),
-          ),
+    return Card(
+      child: ListTile(
+        onTap: () async {
+          Transferencia transferencia = await Navigator.push(context, MaterialPageRoute(builder: (context) => FormularioTransferencia(contato)));
+          if (transferencia != null) Navigator.pop(context);
+        },
+        title: Text(
+          contato.nome,
+          style: TextStyle(fontSize: 24),
+        ),
+        subtitle: Text(
+          "A: ${contato.agencia} C: ${contato.conta}",
+          style: TextStyle(fontSize: 16),
         ),
       ),
     );
