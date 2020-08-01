@@ -1,5 +1,5 @@
 import 'package:bytebank/components/editor.dart';
-import 'package:bytebank/database/dao/transferencia_dao.dart';
+import 'package:bytebank/http/webclients/transferencia_webclient.dart';
 import 'package:bytebank/models/Contato.dart';
 import 'package:bytebank/models/Transferencia.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,11 @@ class FormularioTransferencia extends StatelessWidget {
     final double valor = double.tryParse(_controllerCampoValor.text); //Se o parse falha, retorna null
     if (valor != null) {
       final transferencia = Transferencia(_contato, valor);
-      TransferenciaDao().salvar(transferencia).then((transferenciaSalva) => Navigator.pop(context, transferenciaSalva));
+      final webclient = TransferenciaWebClient();
+      webclient.salvarTransferencia(transferencia).then((transferenciaSalva) {
+        if (transferenciaSalva != null) Navigator.pop(context, transferenciaSalva);
+      });
+      //TransferenciaDao().salvar(transferencia).then((transferenciaSalva) => Navigator.pop(context, transferenciaSalva));
     }
   }
 
