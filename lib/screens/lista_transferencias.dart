@@ -1,7 +1,7 @@
 import 'package:bytebank/components/carregando_centralizado.dart';
 import 'package:bytebank/components/item_transferencia.dart';
 import 'package:bytebank/components/mensagem_centralizada.dart';
-import 'package:bytebank/http/webclient.dart';
+import 'package:bytebank/http/webclients/transferencia_webclient.dart';
 import 'package:bytebank/models/Transferencia.dart';
 import 'package:bytebank/screens/lista_contatos.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class ListaTransferencias extends StatefulWidget {
 }
 
 class _ListaTransferenciasState extends State<ListaTransferencias> {
-  final Webclient webclient = Webclient();
+  final TransferenciaWebClient webclient = TransferenciaWebClient();
 
   @override
   Widget build(BuildContext context) {
