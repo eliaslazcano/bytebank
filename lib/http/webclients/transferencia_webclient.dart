@@ -9,41 +9,31 @@ import 'package:http_interceptor/http_interceptor.dart';
 class TransferenciaWebClient {
   final Client client = HttpClientWithInterceptor.build(interceptors: [LoggingInterceptor()]);
 
-  List<Transferencia> _toTransferencia(Response response) {
-    //Adapta o JSON para um List<Transferencia>.
-    final List<dynamic> decodedJson = jsonDecode(response.body);
-    final List<Transferencia> transferencias = List();
-    for (Map<String, dynamic> transferenciaJson in decodedJson) {
-      final Map<String, dynamic> contatoJson = transferenciaJson['contact'];
-      final Contato contato = Contato(contatoJson['name'], null, contatoJson['accountNumber']);
-      final Transferencia transferencia = Transferencia(contato, transferenciaJson['value']);
-      transferencias.add(transferencia);
-    }
-    return transferencias;
-  }
-  Map<String, dynamic> _toMap(Transferencia transferencia) {
-    final Map<String, dynamic> transferenciaMap = {
-      'value': transferencia.valor,
-      'contact': {
-        'name': transferencia.contato.nome,
-        'accountNumber': transferencia.contato.conta
-      }
-    };
-    return transferenciaMap;
-  }
+//  List<Transferencia> _toTransferencias(Response response) {
+//    //Adapta o JSON para um List<Transferencia>.
+//    final List<dynamic> decodedJson = jsonDecode(response.body);
+//    return decodedJson.map((json) => Transferencia.fromJson(json)).toList();
+//  }
+//  Map<String, dynamic> _toMap(Transferencia transferencia) {
+//    final Map<String, dynamic> transferenciaMap = {
+//      'value': transferencia.valor,
+//      'contact': {
+//        'name': transferencia.contato.nome,
+//        'accountNumber': transferencia.contato.conta
+//      }
+//    };
+//    return transferenciaMap;
+//  }
 
   Future<List<Transferencia>> obterTransferencias() async {
     final Response response = await client
         .get('${Webclient.baseUrl}/transactions')
         .timeout(Duration(seconds: 60));
-
-    List<Transferencia> transferencias = _toTransferencia(response);
-    return transferencias;
+    final List<dynamic> decodedJson = jsonDecode(response.body);
+    return decodedJson.map((json) => Transferencia.fromJson(json)).toList();
   }
   Future<Transferencia> salvarTransferencia(Transferencia transferencia) async {
-    //Map<String, dynamic> => Mapa (igual array) de chave String e valor dynamic (tipagem variavel)
-    Map<String, dynamic> transferenciaMap = _toMap(transferencia);
-    final String tranferenciaJson = jsonEncode(transferenciaMap);
+    final String tranferenciaJson = jsonEncode(transferencia.toJson());
 
     final Response response = await client
         .post('${Webclient.baseUrl}/transactions',
@@ -56,11 +46,6 @@ class TransferenciaWebClient {
         .timeout(Duration(seconds: 60));
 
     //Trata a resposta
-    Map<String, dynamic> json = jsonDecode(response.body);
-    final Map<String, dynamic> contatoJson = json['contact'];
-    return Transferencia(
-        Contato(contatoJson['name'], null, contatoJson['accountNumber']),
-        0
-    );
+    return Transferencia.fromJson(jsonDecode(response.body));
   }
 }
