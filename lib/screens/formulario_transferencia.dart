@@ -1,3 +1,4 @@
+import 'package:bytebank/components/dialog_transactionAuth.dart';
 import 'package:bytebank/components/editor.dart';
 import 'package:bytebank/http/webclients/transferencia_webclient.dart';
 import 'package:bytebank/models/Contato.dart';
@@ -16,10 +17,7 @@ class FormularioTransferencia extends StatelessWidget {
     final double valor = double.tryParse(_controllerCampoValor.text); //Se o parse falha, retorna null
     if (valor != null) {
       final transferencia = Transferencia(_contato, valor);
-      final webclient = TransferenciaWebClient();
-      webclient.salvarTransferencia(transferencia).then((transferenciaSalva) {
-        if (transferenciaSalva != null) Navigator.pop(context, transferenciaSalva);
-      });
+      showDialog(context: context, builder: (context) => TransactionDialog());
       //TransferenciaDao().salvar(transferencia).then((transferenciaSalva) => Navigator.pop(context, transferenciaSalva));
     }
   }
